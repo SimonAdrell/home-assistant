@@ -1,0 +1,13 @@
+{
+  "domain": "amplifi",
+  "name": "Amplifi",
+  "config_flow": true,
+  "documentation": "https://github.com/puttyman/hass-amplifi",
+  "issue_tracker": "https://github.com/puttyman/hass-amplifi/issues",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": [],
+  "homekit": {},
+  "dependencies": [],
+  "codeowners": ["@puttyman"]
+}

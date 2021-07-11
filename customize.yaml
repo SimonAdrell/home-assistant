@@ -1,0 +1,6 @@
+light.bed_light:
+  friendly_name: Bed light
+light.kitchen_light:
+  friendly_name: Kitchen light
+vacuum.xiaomi_vacuum_cleaner:
+  friendly_name: Charles

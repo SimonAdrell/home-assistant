@@ -1,0 +1,18 @@
+tradfri_turn_up:
+  alias: tradfri_turn_up
+  sequence:
+  - service: media_player.volume_set
+    data_template:
+      entity_id: media_player.bedroom_speaker
+      volume_level: '{{ states.media_player.bedroom_speaker.attributes.volume_level
+        + 0.05 }}'
+  mode: parallel
+tradfri_turn_down:
+  alias: tradfri_turn_down
+  sequence:
+  - service: media_player.volume_set
+    data_template:
+      entity_id: media_player.bedroom_speaker
+      volume_level: '{{ states.media_player.bedroom_speaker.attributes.volume_level 
+      - 0.05 }}'
+  mode: parallel

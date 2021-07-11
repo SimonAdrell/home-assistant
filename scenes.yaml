@@ -1,0 +1,369 @@
+- id: '1603048740194'
+  name: timeForBed
+  entities:
+    light.bed_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 47
+      color_temp: 335
+      hs_color:
+      - 35.161
+      - 72.941
+      rgb_color:
+      - 255
+      - 177
+      - 69
+      xy_color:
+      - 0.525
+      - 0.411
+      color:
+        x: 0.525
+        y: 0.413
+      linkquality: 214
+      state: 'on'
+      update_available: false
+      friendly_name: Bed light
+      supported_features: 63
+  icon: mdi:bed-outline
+- id: '1604840595618'
+  name: Tv_playing
+  entities:
+    light.0x0017880103d43035_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 74
+      color_temp: 500
+      linkquality: 17
+      state: 'on'
+      update_available: false
+      friendly_name: Behind the TV light
+      supported_features: 47
+    light.0x0017880104a06d98_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 36
+      color_temp: 371
+      hs_color:
+      - 36
+      - 66.667
+      rgb_color:
+      - 255
+      - 186
+      - 84
+      xy_color:
+      - 0.505
+      - 0.413
+      color:
+        x: 0.504
+        y: 0.414
+      linkquality: 17
+      state: 'on'
+      update_available: false
+      friendly_name: Kitchen window light
+      supported_features: 63
+    light.kitchen_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 125
+      color_temp: 500
+      hs_color:
+      - 35.426
+      - 73.725
+      rgb_color:
+      - 255
+      - 178
+      - 67
+      xy_color:
+      - 0.525
+      - 0.413
+      color:
+        x: 0.526676280311873
+        y: 0.41329727450763
+      linkquality: 17
+      state: 'on'
+      update_available: false
+      friendly_name: Kitchen light
+      supported_features: 63
+  icon: mdi:television-play
+- id: '1608126311511'
+  name: Tv_stopped
+  entities:
+    light.kitchen_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 177
+      color_temp: 335
+      hs_color:
+      - 35.161
+      - 72.941
+      rgb_color:
+      - 255
+      - 177
+      - 69
+      xy_color:
+      - 0.525
+      - 0.411
+      color:
+        x: 0.525
+        y: 0.413
+      linkquality: 106
+      state: 'on'
+      update_available: false
+      friendly_name: Kitchen light
+      supported_features: 63
+    light.0x0017880103d43035_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 180
+      color_temp: 500
+      linkquality: 105
+      state: 'on'
+      update_available: false
+      friendly_name: Behind the TV light
+      supported_features: 47
+    light.0x0017880104a06d98_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 188
+      color_temp: 360
+      hs_color:
+      - 35.647
+      - 66.667
+      rgb_color:
+      - 255
+      - 185
+      - 84
+      xy_color:
+      - 0.506
+      - 0.411
+      color:
+        x: 0.505
+        y: 0.413
+      linkquality: 106
+      state: 'on'
+      update_available: false
+      friendly_name: Kitchen window light
+      supported_features: 63
+- id: '1608812256600'
+  name: meeting
+  entities:
+    light.0x0017880103d43035_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 198
+      color_temp: 500
+      state: 'on'
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Behind the TV
+      supported_features: 47
+    light.0x0017880104a06d98_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 250
+      color_temp: 195
+      hs_color:
+      - 359.118
+      - 80
+      rgb_color:
+      - 255
+      - 50
+      - 53
+      xy_color:
+      - 0.662
+      - 0.301
+      color:
+        x: 0.666
+        y: 0.301
+      linkquality: 126
+      state: 'on'
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Kitchen window
+      supported_features: 63
+    light.kitchen_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 99
+      color_temp: 306
+      hs_color:
+      - 34.426
+      - 71.765
+      rgb_color:
+      - 255
+      - 176
+      - 71
+      xy_color:
+      - 0.525
+      - 0.409
+      color:
+        x: 0.525
+        y: 0.409
+      linkquality: 126
+      state: 'on'
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Kitchen light
+      supported_features: 63
+    light.desk_light:
+      friendly_name: Desk light
+      supported_features: 0
+      state: 'on'
+- id: '1609673219670'
+  name: craft_scene
+  entities:
+    light.0x0017880103d43035_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 210
+      color_temp: 500
+      linkquality: 152
+      state: 'on'
+      update_available: false
+      friendly_name: Behind the TV
+      supported_features: 47
+    light.0x0017880104a06d98_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 198
+      color_temp: 125000
+      hs_color:
+      - 39.375
+      - 50.196
+      rgb_color:
+      - 255
+      - 211
+      - 127
+      xy_color:
+      - 0.448
+      - 0.409
+      color:
+        x: 0.448
+        y: 0.409
+      linkquality: 152
+      state: 'on'
+      update_available: false
+      friendly_name: Kitchen window
+      supported_features: 63
+    light.desk_light:
+      friendly_name: Desk light
+      supported_features: 0
+      state: 'off'
+    light.kitchen_light:
+      min_mireds: 153
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      brightness: 209
+      color_temp: 297
+      hs_color:
+      - 38.143
+      - 54.902
+      rgb_color:
+      - 255
+      - 204
+      - 114
+      xy_color:
+      - 0.464
+      - 0.412
+      color:
+        x: 0.464
+        y: 0.412
+      linkquality: 152
+      state: 'on'
+      update_available: false
+      friendly_name: Kitchen light
+      supported_features: 63
+  icon: mdi:scissors-cutting

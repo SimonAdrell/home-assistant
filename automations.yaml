@@ -1,0 +1,416 @@
+- id: '1583683708363'
+  alias: Wake me up with coffee
+  description: ''
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == (states.input_datetime.coffee_time.attributes.timestamp
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.coffee_weekend
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+  - condition: state
+    entity_id: input_boolean.morningcoffee_enabled
+    state: 'on'
+  action:
+  - device_id: 41d49cfd098649f9a053899aea63ac13
+    domain: switch
+    entity_id: switch.coffee
+    type: turn_on
+- id: 9826aac491c14cb2bfad424b20bd3acd
+  alias: Wake me up using bedroom light
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == (states.input_datetime.wakeup_time.attributes.timestamp
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: state
+    entity_id: input_boolean.wakeup_enabled
+    state: 'on'
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.wakeup_weekend
+      state: 'on'
+    - condition: time
+      weekday:
+      - mon
+      - tue
+      - wed
+      - thu
+      - fri
+  action:
+  - data:
+      entity_id: light.bed_light
+      transition: 1200
+      brightness: 200
+    entity_id: light.bed_light
+    service: light.turn_on
+  mode: single
+- id: '1585408601842'
+  alias: Chromecast Playing
+  description: ''
+  trigger:
+  - entity_id: media_player.vegantv
+    platform: state
+    to: playing
+  condition: []
+  action:
+  - data: {}
+    entity_id: media_player.bedroom_speaker
+    service: media_player.media_pause
+  - data: {}
+    entity_id: media_player.home_group
+    service: media_player.media_pause
+  - data: {}
+    entity_id: media_player.kitchen_speaker
+    service: media_player.media_pause
+- id: '1603045706328'
+  alias: Symfonisk play pause
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 3ee67755114e11eb9ef4c3740936b860
+    type: action
+    subtype: play_pause
+    discovery_id: 0xec1bbdfffe2ad31a action_play_pause
+  condition: []
+  action:
+  - service: media_player.media_play_pause
+    data: {}
+    entity_id: media_player.vegantv
+  mode: single
+- id: '1603873672997'
+  alias: Morning
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_boolean.morning
+    from: 'off'
+    to: 'on'
+    for: 00:00:00
+  condition: []
+  action:
+  - service: media_player.play_media
+    data:
+      media_content_id: http://sverigesradio.se/topsy/direkt/164-hi-mp3
+      media_content_type: audio/mp3
+    entity_id: media_player.home_group
+  - service: light.turn_on
+    data: {}
+    entity_id: light.hallway_light
+  - service: light.turn_on
+    data: {}
+    entity_id: light.kitchen_light
+  - service: light.turn_on
+    data: {}
+    entity_id: light.spotlight
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.night_mode
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.eveningmode
+  - service: input_boolean.turn_off
+    data: {}
+    entity_id: input_boolean.morning
+  - service: input_select.set_options
+    data:
+      options: home
+  mode: single
+- id: '1603874854181'
+  alias: Evening mode
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_boolean.eveningmode
+    from: 'off'
+    to: 'on'
+  condition: []
+  action:
+  - service: light.turn_off
+    data: {}
+    target:
+      entity_id:
+      - light.kitchen_light
+      - light.desk_light
+      - light.hallway_light
+  - service: scene.turn_on
+    data: {}
+    entity_id: scene.evening
+  mode: single
+- id: '1604766662932'
+  alias: Tradfri turn up
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 2c5b31c6210c11eb978fa526dd45951f
+    type: action
+    subtype: brightness_up_click
+    discovery_id: 0x680ae2fffea21e08 action_brightness_up_click
+  condition: []
+  action:
+  - service: media_player.volume_up
+    data: {}
+    entity_id: media_player.bedroom_speaker
+  mode: single
+- id: '1604767905015'
+  alias: Tradfri turn down
+  description: ''
+  trigger:
+  - platform: device
+    domain: mqtt
+    device_id: 2c5b31c6210c11eb978fa526dd45951f
+    type: action
+    subtype: brightness_down_click
+    discovery_id: 0x680ae2fffea21e08 action_brightness_down_click
+  condition: []
+  action:
+  - service: script.tradfri_turn_down
+    data: {}
+  mode: single
+- id: '1604771713832'
+  alias: Turn the light on when motion is detected
+  description: ''
+  trigger:
+  - platform: device
+    domain: binary_sensor
+    entity_id: binary_sensor.0x680ae2fffe373646_occupancy
+    device_id: 93c853c1210c11ebac1a111fd4737b38
+    type: motion
+  condition: []
+  action:
+  - domain: light
+    entity_id: light.0x0017880103d43035_light
+    device_id: 884aba6d211d11eb953f95398a772d71
+    type: turn_on
+  - domain: light
+    entity_id: light.0x0017880104a06d98_light
+    device_id: 3cf0f363211d11eb8ea2efe261d73b6f
+    type: turn_on
+  mode: single
+- id: '1604839903634'
+  alias: Turn on bed light at dusk
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+  condition: []
+  action:
+  - service: light.turn_on
+    data: {}
+    entity_id: light.bed_light
+  mode: single
+- id: '1605099438704'
+  alias: Notification action pause_vegantv
+  description: ''
+  trigger:
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      event_data:
+        action: pause_vegantv
+  condition: []
+  action:
+  - service: media_player.media_play_pause
+    data: {}
+    entity_id: media_player.vegantv
+  mode: single
+- id: '1625153414973'
+  alias: Low battery level detection & notification for all battery sensors
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      threshold: 15
+      actions:
+      - service: notify.mobile_app_simons_jobbtelefon
+        data:
+          message: Sensor low on battery {{sensors}}
+- id: '1625153898742'
+  alias: Send notification and sayt that is the last episode for the night
+  description: Turn off the livingroom tv at night, controlled by input parameters
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == (states.input_datetime.offtv_time.attributes.timestamp
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.tv_weekend
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor_2
+      state: 'on'
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.offtv_enabled
+      state: 'on'
+  - condition: not
+    conditions:
+    - condition: state
+      entity_id: media_player.living_room_tv
+      state: 'off'
+  action:
+  - service: notify.living_room_tv
+    data:
+      message: Detta är sista avsnittet, Klockan är {{(states.input_datetime.offtv_time.attributes.timestamp
+        | int | timestamp_custom('%H:%M', False)) }}
+  mode: single
+- id: '1625205618894'
+  alias: Simon eller Andy kommer hem.
+  description: Damsugaren pausas
+  trigger:
+  - platform: zone
+    entity_id: person.andy
+    zone: zone.home
+    event: enter
+  - platform: zone
+    entity_id: person.simon_2
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: device
+    device_id: 285bed2183392d3df1ca12616d3b99e5
+    domain: vacuum
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    type: is_cleaning
+  action:
+  - device_id: 285bed2183392d3df1ca12616d3b99e5
+    domain: vacuum
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    type: dock
+  - service: notify.mobile_app_simons_jobbtelefon
+    data:
+      title: 'Någon har kommit hem '
+      message: Charles återvänder till dockan
+  mode: single
+- id: '1625212740374'
+  alias: Set house to home if Simon or Andy is home
+  description: ''
+  trigger:
+  - platform: time_pattern
+    seconds: /30
+  condition:
+  - condition: or
+    conditions:
+    - condition: zone
+      entity_id: person.simon_2
+      zone: zone.home
+    - condition: zone
+      entity_id: person.andy
+      zone: zone.home
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_select.house_state
+      state: away
+  action:
+  - service: input_select.select_option
+    target:
+      entity_id: input_select.house_state
+    data:
+      option: home
+  mode: single
+- id: '1625463979221'
+  alias: 'Turn off tv if an episode is started after alloted time '
+  description: Stäng av TV ifall det startar ett nytt avsnitt efter utsatt tid
+  trigger:
+  - platform: state
+    entity_id: media_player.vegantv
+    from: playing
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.tv_weekend
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor_2
+      state: 'on'
+  - condition: and
+    conditions:
+    - condition: state
+      entity_id: input_boolean.offtv_enabled
+      state: 'on'
+    - condition: template
+      value_template: '{{ states(''sensor.time'') >= (states.input_datetime.offtv_time.attributes.timestamp
+        | int | timestamp_custom(''%H:%M'', False)) }}'
+  action:
+  - service: media_player.turn_off
+    target:
+      entity_id: media_player.living_room_tv
+  - service: light.turn_on
+    target:
+      entity_id: light.bed_light
+    data:
+      transition: 8
+  mode: single
+- id: '1625480049859'
+  alias: Turn on vaccume
+  description: 'Turn on vacuume when Andy is not at home. '
+  trigger:
+  - platform: template
+    value_template: '{{ states(''sensor.time'') == (states.input_datetime.vacuum_time.attributes.timestamp
+      | int | timestamp_custom(''%H:%M'', False)) }}'
+  condition:
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: input_boolean.vacuum_weekend
+      state: 'on'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+  - condition: not
+    conditions:
+    - condition: zone
+      entity_id: person.andy
+      zone: zone.home
+  action:
+  - service: counter.increment
+    target:
+      entity_id: counter.vaccume_times
+  - service: vacuum.start
+    target:
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+  - service: notify.mobile_app_simons_jobbtelefon
+    data:
+      title: Startar  {{state_attr("vacuum.xiaomi_vacuum_cleaner", "friendly_name")}}
+      message: Klockan är {{(states.input_datetime.vacuum_time.attributes.timestamp
+        | int |     timestamp_custom('%H:%M', False)) }}. Har körts {{states("counter.vaccume_times")}}
+        gånger utan att tömmas
+  mode: single
+- id: '1626001564252'
+  alias: Update status light with Teams
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: sensor.teams_raw
+  condition:
+  - condition: zone
+    entity_id: person.simon_2
+    zone: zone.home
+  - condition: zone
+    entity_id: person.andy
+    zone: zone.home
+  action:
+  - service: light.turn_on
+    target:
+      entity_id: light.kitchen_window
+    data:
+      rgb_color: '{% if states("sensor.teams_raw") in ["Available"] %} [146, 195,
+        93] {% elif states("sensor.teams_raw") in ["DoNotDisturb","Presenting","Focusing"]
+        %} [255, 30, 50] {% elif states("sensor.teams_raw") in ["Busy","OnThePhone","DoNotDisturb","Presenting","Focusing","InAMeeting"]
+        %} [255, 30, 50] {% elif states("sensor.teams_raw") in ["Away","BeRightBack"]
+        %} [252, 209, 22] {% else %} [0, 0, 0] {% endif %} '
+  mode: single

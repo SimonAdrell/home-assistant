@@ -1,0 +1,131 @@
+ios:
+cloud:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+sensor: !include sensors.yaml
+binary_sensor: !include binary_sensor.yaml
+
+homeassistant:
+  packages: !include_dir_named packages
+  customize: !include customize.yaml
+
+#Morgning light
+input_boolean:
+  wakeup_enabled:
+    name: "Wake-up lights"
+    initial: on
+    icon: mdi:theme-light-dark
+  wakeup_weekend:
+    name: "Enable Wake-up on weekends"
+    initial: off 
+    icon: mdi:calendar-blank
+  morningcoffee_enabled:
+    name: "Turn on coffe"
+    initial: off 
+    icon: mdi:coffee
+  coffee_weekend:
+    name: "Turn on coffe on weekends"
+    initial: off 
+    icon: mdi:calendar-blank
+  vacuum_enabled:
+    name: "Turn on vacuum"
+    initial: off
+    icon: mdi:robot-vacuum
+  vacuum_weekend:
+    name: "Turn on vacuum on weekends"
+    initial: off
+    icon: mdi:calendar-blank
+  night_mode:
+    name: "Night mode"
+    initial: off
+    icon: mdi:weather-night
+  offtv_enabled:
+    name: "Turn off tv"
+    initial: on
+    icon: mdi:television
+  tv_weekend:
+    name: "Turn off tv on weekends"
+    initial: off
+    icon: mdi:calendar-blank
+input_datetime:
+  wakeup_time:
+    name: "Start lights at"
+    has_time: true
+    has_date: false
+    initial: "06:20"
+  coffee_time:
+    name: "Start coffe at"
+    has_time: true
+    has_date: false
+    initial: "07:05"
+  vacuum_time:
+    name: "Start vacuum at"
+    has_time: true
+    has_date: false
+    initial: "14:00"
+  offtv_time:
+    name: "Time to turn off TV"
+    has_time: true
+    has_date: false
+    initial: "20:30"
+
+telegram_bot:
+ - platform: polling
+   api_key: !secret telegram_token
+   allowed_chat_ids:
+     - !secret telegram_chatid_Simon
+     - !secret telegram_chatid_Andy
+     - !secret telegram_chatid_Group 
+
+
+
+#spotify:
+#  client_id: !secret spotify_CLIENT_ID
+#  client_secret: !secret  spotify_CLIENT_SECRET
+
+notify:
+  - platform: html5
+    name: 'Homeassistant'
+    vapid_pub_key: !secret vapid_pub_key
+    vapid_prv_key: !secret vapid_prv_key
+    vapid_email: !secret vapid_email
+  - platform: telegram
+    name: Telegram_notify_Simon
+    chat_id: !secret telegram_chatid_Simon
+  - platform: telegram
+    name: Telegram_notify_Andy
+    chat_id: !secret telegram_chatid_Andy
+  - platform: telegram
+    name: Telegram_notify_Group
+    chat_id: !secret telegram_chatid_Group
+
+light:
+  - platform: switch
+    name: Living room light
+    entity_id: switch.sonoff_hallway
+  - platform: switch
+    name: Desk light
+    entity_id: switch.desk_light
+    
+default_config:
+frontend:
+   themes: !include_dir_merge_named themes
+
+device_tracker:
+  - platform: google_maps
+    username: !secret google_maps_username
+
+webostv:
+  host: 192.168.142.147
+  name: Living Room TV
+  turn_on_action:
+    service: persistent_notification.create
+    data:
+      message: "Turn on action"
+  customize:
+    sources:
+      - youtube
+      - netflix

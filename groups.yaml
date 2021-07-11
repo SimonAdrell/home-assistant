@@ -1,0 +1,29 @@
+alarm_clock:
+  name: "Wake-up Lights"
+  entities: # Add all entities here that should be part of the widget
+    - input_datetime.wakeup_time
+    - input_boolean.wakeup_enabled
+    - input_boolean.wakeup_weekend
+coffee_clock:
+  name: "Turn on coffee"
+  entities: # Add all entities here that should be part of the widget
+    - input_datetime.coffee_time
+    - input_boolean.morningcoffee_enabled
+    - input_boolean.coffee_weekend
+vacuum_clock:
+  name: "Turn on vacuum"
+  entities: # Add all entities here that should be part of the widget
+    - input_datetime.vacuum_time
+    - input_boolean.vacuum_enabled
+    - input_boolean.vacuum_weekend
+morningLight:
+  name: "Morning lights"
+  entities:
+    - light.bed_light
+    - light.kitchen_light
+turnofftv:
+  name: "Turn off tv"
+  entities:
+    - input_datetime.offtv_time
+    - input_boolean.offtv_enabled
+    - input_boolean.tv_weekend
